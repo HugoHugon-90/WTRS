@@ -4,7 +4,7 @@ import sympy as sym
 x = sym.symbols('x')
 
 def run():
-    print(c.SAY_HELLO)
+    print(c.c)
     print(sym.diff(x**3))
 
 if __name__ == '__main__':
