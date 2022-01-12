@@ -1,11 +1,11 @@
-from helpers import constants as c
 import sympy as sym
+from helpers.dsolver import Dsolver
 
 x = sym.symbols('x')
 
 def run():
-    print(c.c)
-    print(sym.diff(x**3))
+    dsolver = Dsolver()
+    dsolver.integrator()
 
 if __name__ == '__main__':
     run()

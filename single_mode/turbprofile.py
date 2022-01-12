@@ -5,8 +5,7 @@ from scipy import rand
 
 # single mode density fluctuation turbulence profile in the x direction
 # dne = dne0 Cos (q.x + phi)
-
-class Turb_Profile:
+class TurbProfile:
 
     def __init__(self, dne0, q):
         self.dne0 = dne0
@@ -21,10 +20,10 @@ class Turb_Profile:
     # literal integration of <dnedne>, <dnednedx> and <ddnedx ddnedx> over [0,2Pi] using the single mode profile
 
     def dnedne(self):
-        return self.dne0 ** 2 / 2
+        return (self.dne0 ** 2) / 2
 
     def dnednedx(self):
         return 0
 
     def dnedxdnedx(self):
-        return self.q ** 2 * self.dnedne()
+        return (self.q ** 2) * (self.dne0 ** 2) / 2

@@ -4,10 +4,10 @@ from single_mode.setup import Setup
 
 # 2-D evolution eqs for the average rays; single mode in the x-direction
 
-class Average_Rays(Setup):
+class AverageRays(Setup):
 
     def __init__(self):
-        pass
+        super().__init__()
 
     def partial_derivatives(self):
 
@@ -32,7 +32,7 @@ class Average_Rays(Setup):
                + kx * (kx * dkxdne + ky * dkydne) / k3 \
                - (kx / k) * dxdnedx
 
-        dydt = ky(1 + A) / k \
+        dydt = ky * (1 + A) / k \
                + (3 / 2) * ky * (kx2 * dkxdkx + ky2 * dkydky + 2 * kx * ky * dkxdky) / k5 \
                + (ky * (dkxdkx + dkydky) + 2 * (kx * dkxdky + ky * dkydky)) / (2 * k3) \
                - dkydne / k \

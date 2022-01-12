@@ -1,4 +1,4 @@
-from single_mode.average_rays import Average_Rays
+from single_mode.averagerays import AverageRays
 from scipy.integrate import odeint
 
 
@@ -8,14 +8,20 @@ from scipy.integrate import odeint
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html
 
 
-class Dsolver(Average_Rays):
+class Dsolver(AverageRays):
 
-    def vectorfield(self, t):
+    def __init__(self):
+        super().__init__()
 
-        """
-        Arguments:
-            t :  time
-        """
-        return self.partial_derivatives()
+    def integrator(self):
+        t = [ self.stop_time * float(i) / (self.num_points - 1) for i in range(self.num_points) ]
 
-    odeint()
+        p=[]
+        wsol = odeint(self.partial_derivatives(), self.w, t, tfirst = True  ,atol=self.abserr, rtol=self.relerr)
+
+        with open(self.file_name, 'w') as f:
+            # Print & save the solution.
+            for t1, w1 in zip(t, wsol):
+                print(f'{t1} \t {w1[0]}', file=f)
+
+        return wsol

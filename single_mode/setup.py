@@ -1,19 +1,23 @@
 from single_mode import input_parameters
-from single_mode.turb_profile import Turb_Profile
+from single_mode.turbprofile import TurbProfile
 
-class Setup(Turb_Profile):
-    def __init__(self, init_type):
+
+class Setup(TurbProfile):
+
+    def __init__(self):
         super().__init__(input_parameters.dne0, input_parameters.q0)
 
-        if init_type == "parallel":
+        self.input_type = input_parameters.input_type
+
+        if self.input_type == "parallel":
             self.kx0 = input_parameters.k0_par[0]
             self.ky0 = input_parameters.k0_par[1]
 
-        elif init_type == "perp":
+        elif self.input_type == "perp":
             self.kx0 = input_parameters.k0_perp[0]
             self.ky0 = input_parameters.k0_perp[1]
 
-        elif init_type == "oblique":
+        elif self.input_type == "oblique":
             self.kx0 = input_parameters.k0_obl[0]
             self.ky0 = input_parameters.k0_obl[1]
 
@@ -47,7 +51,7 @@ class Setup(Turb_Profile):
         self.dkxdnedx = input_parameters.dkxdnedx
         self.dkydnedx = input_parameters.dkydnedx
 
-        self.n_profile = Turb_Profile(input_parameters.dne0, input_parameters.q0)
+        self.n_profile = TurbProfile(input_parameters.dne0, input_parameters.q0)
         self.dnedne = self.n_profile.dnedne()
         self.dnednedx = self.dnednedx()
         self.dnedxdnedx = self.dnedxdnedx()
@@ -60,3 +64,8 @@ class Setup(Turb_Profile):
 
         self.num_points = input_parameters.num_points
         self.window = input_parameters.window
+        self.abserr = input_parameters.abserr
+        self.relerr = input_parameters.relerr
+        self.stop_time = input_parameters.stop_time
+        self.file_name = input_parameters.file_name
+
