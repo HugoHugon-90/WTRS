@@ -10,18 +10,12 @@ from scipy.integrate import odeint
 
 class Dsolver(Average_Rays):
 
-    def vectorfield(self, w, t, p):
+    def vectorfield(self, t):
 
         """
         Arguments:
-            w :  vector of the state variables
             t :  time
         """
-        x, y, kx, ky, dx, dy, dkx, dky,  dxdx, dxdy, dydy, dkxdkx, dkxdky, dkydky, dxdne, dydne, dkxdne, dkydne, dxdnedr, dydnedr, dnedne = w
-
-        dxdt = self.dxdt(w)
-
-        dfdt = [dxdt]
-        return dfdt
+        return self.partial_derivatives()
 
     odeint()
