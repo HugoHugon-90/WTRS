@@ -1,3 +1,4 @@
+from helpers import constants
 from single_mode import input_parameters
 from single_mode.turbprofile import TurbProfile
 
@@ -10,21 +11,20 @@ class Setup(TurbProfile):
         self.input_type = input_parameters.input_type
 
         if self.input_type == "parallel":
-            self.kx0 = input_parameters.k0_par[0]
-            self.ky0 = input_parameters.k0_par[1]
+            self.kx0 = constants.k0_par[0]
+            self.ky0 = constants.k0_par[1]
 
-        elif self.input_type == "perp":
-            self.kx0 = input_parameters.k0_perp[0]
-            self.ky0 = input_parameters.k0_perp[1]
+        elif self.input_type == "perpendicular":
+            self.kx0 = constants.k0_perp[0]
+            self.ky0 = constants.k0_perp[1]
 
         elif self.input_type == "oblique":
-            self.kx0 = input_parameters.k0_obl[0]
-            self.ky0 = input_parameters.k0_obl[1]
+            self.kx0 = constants.k0_obl[0]
+            self.ky0 = constants.k0_obl[1]
 
         else:
-            print("Invalid argument. Automatic initialization: oblique case")
-            self.kx0 = input_parameters.k0_obl[0]
-            self.ky0 = input_parameters.k0_obl[1]
+            self.kx0 = input_parameters.k0[0]
+            self.ky0 = input_parameters.k0[1]
 
         self.x0 = input_parameters.r0[0]
         self.y0 = input_parameters.r0[1]
@@ -60,11 +60,6 @@ class Setup(TurbProfile):
                  self.dydky0, self.dkxdkx0, self.dkxdky0, self.dkydky0, self.dxdne, self.dydne, \
                  self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx, self.dkxdnedx, self.dkydnedx
 
-        # self.w = self.x0, self.y0, self.kx0, self.ky0, self.dx0, self.dy0, self.dkx0, self.dky0, \
-        #        self.dxdx0, self.dxdy0, self.dydy0, self.dxdkx0, self.dxdky0, self.dydkx0, self.dydky0, \
-        #       self.dkxdkx0, self.dkxdky0, self.dkydky0, \
-        #      self.dxdne, self.dydne, self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx,\
-        #     self.dkxdnedx, self.dkydnedx, self.dnedne, self.dnedxdnedx
 
         self.num_points = input_parameters.num_points
         self.window = input_parameters.window
