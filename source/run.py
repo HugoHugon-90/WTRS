@@ -1,11 +1,13 @@
-from helpers import constants as c
-import sympy as sym
+from helpers.dsolver import Dsolver
+from helpers.visualizer import Visualizer
 
-x = sym.symbols('x')
 
 def run():
-    print(c.c)
-    print(sym.diff(x**3))
+    dsolver = Dsolver()
+    visualizer = Visualizer()
+    dsolver.integrator()
+    visualizer.plot_figure()
+
 
 if __name__ == '__main__':
     run()
