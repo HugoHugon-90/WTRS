@@ -56,11 +56,15 @@ class Setup(TurbProfile):
         self.dnednedx = self.dnednedx()
         self.dnedxdnedx = self.dnedxdnedx()
 
-        self.w = self.x0, self.y0, self.kx0, self.ky0, self.dx0, self.dy0, self.dkx0, self.dky0, \
-                 self.dxdx0, self.dxdy0, self.dydy0, self.dxdkx0, self.dxdky0, self.dydkx0, self.dydky0, \
-                 self.dkxdkx0, self.dkxdky0, self.dkydky0, \
-                 self.dxdne, self.dydne, self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx,\
-                 self.dkxdnedx, self.dkydnedx, self.dnedne, self.dnedxdnedx
+        self.w = self.x0, self.y0, self.kx0, self.ky0, self.dxdx0, self.dxdy0, self.dydy0, self.dxdkx0, self.dxdky0, self.dydkx0, \
+                 self.dydky0, self.dkxdkx0, self.dkxdky0, self.dkydky0, self.dxdne, self.dydne, \
+                 self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx, self.dkxdnedx, self.dkydnedx
+
+        # self.w = self.x0, self.y0, self.kx0, self.ky0, self.dx0, self.dy0, self.dkx0, self.dky0, \
+        #        self.dxdx0, self.dxdy0, self.dydy0, self.dxdkx0, self.dxdky0, self.dydkx0, self.dydky0, \
+        #       self.dkxdkx0, self.dkxdky0, self.dkydky0, \
+        #      self.dxdne, self.dydne, self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx,\
+        #     self.dkxdnedx, self.dkydnedx, self.dnedne, self.dnedxdnedx
 
         self.num_points = input_parameters.num_points
         self.window = input_parameters.window
@@ -68,4 +72,3 @@ class Setup(TurbProfile):
         self.relerr = input_parameters.relerr
         self.stop_time = input_parameters.stop_time
         self.file_name = input_parameters.file_name
-

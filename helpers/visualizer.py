@@ -4,13 +4,13 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import *
 
 
-class visualizer(Dsolver):
+class Visualizer(Dsolver):
 
     def __init__(self, figsizel = 6, figsizew = 4.5,
                  xlabel = "t", ylabel = "", linewidth = 1, has_grid = True,
                  colour = 'b', legend = '', figname = 'a_figure',
-                 figformat = 'png', dpi = 100, fontsize = 16,
-                 title = "average ray equation"):
+                 figformat = 'png', dpi = 600, fontsize = 16,
+                 title = "average ray evolution"):
 
         super().__init__()
 
@@ -32,14 +32,15 @@ class visualizer(Dsolver):
 
         t, x1 = loadtxt(self.file_name, unpack=True)
         plt.xlabel(self.xlabel)
-        plt.ylabel()
+        plt.ylabel(self.ylabel)
         plt.grid(self.has_grid)
-        lw = self.lw
+
         plt.figure(1, figsize=(self.figsizel, self.figsizew))
 
         plt.plot(t, x1, self.colour, linewidth=self.lw)
 
-        plt.legend((r'$\left< x \right>$'), prop=FontProperties(size=self.fontsize))
+        plt.legend([r'$\left< \delta x \delta x \right>$'], prop=FontProperties(size=self.fontsize))
         plt.title(self.title)
 
-
+        fig = self.figname + "." + self.figformat
+        plt.savefig(fig, dpi=self.dpi)

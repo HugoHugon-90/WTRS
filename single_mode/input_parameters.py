@@ -13,7 +13,7 @@ q0 = 0.05
 r0 = [0, 0]
 
 # unperturbed wavenumber
-k0_obl = [1. / sqrt(2), 1. / sqrt(2)]
+k0_obl = [1. / abs(sqrt(2)), 1. / abs(sqrt(2))]
 k0_par = [1., 0.]
 k0_perp = [0., 1.]
 
@@ -51,7 +51,7 @@ num_points = 10000
 window = [-100.0, 100.0]
 abserr = 1.0e-8
 relerr = 1.0e-6
-stop_time = 100.0
+stop_time = 1000.0
 
 # output configs
 file_name = "x_average_ray.txt"
