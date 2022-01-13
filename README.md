@@ -28,4 +28,5 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 - < ne > === 1 ---> \delta n_e0 (r) becomes a percentage 
 - \kappa_x[y]_0, x[y]_0 refer to initial conditions for normalized wavevectors and position, respectively 
 
-
+- Output example:
+![](.README_images/0b33fac4.png)

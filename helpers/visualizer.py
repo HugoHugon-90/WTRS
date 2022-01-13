@@ -8,7 +8,7 @@ class Visualizer(Dsolver):
 
     def __init__(self, figsizel = 6, figsizew = 4.5,
                  xlabel = "t", ylabel = "", linewidth = 1, has_grid = True,
-                 colour = 'b', legend = '', figname = 'a_figure',
+                 colour = 'b', legend = '', figname = 'figure',
                  figformat = 'png', dpi = 600, fontsize = 16,
                  title = "average ray evolution"):
 
