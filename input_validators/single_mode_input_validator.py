@@ -1,0 +1,2 @@
+class SingleModeInputValidator:
+    pass

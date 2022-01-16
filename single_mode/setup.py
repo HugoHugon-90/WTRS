@@ -1,14 +1,14 @@
 from helpers import constants
-from single_mode import input_parameters
+from single_mode.input_parameters import InputParameters
 from single_mode.single_mode_turbulence_profile import SingleModeTurbulenceProfile
 
 
 class Setup(SingleModeTurbulenceProfile):
 
     def __init__(self):
-        super().__init__(input_parameters.dne0, input_parameters.q0)
+        super().__init__(InputParameters.dne0, InputParameters.q0)
 
-        self.input_type = input_parameters.input_type
+        self.input_type = InputParameters.input_type
 
         if self.input_type == "parallel":
             self.kx0 = constants.k0_par[0]
@@ -23,8 +23,8 @@ class Setup(SingleModeTurbulenceProfile):
             self.ky0 = constants.k0_obl[1]
 
         else:
-            self.kx0 = input_parameters.k0[0]
-            self.ky0 = input_parameters.k0[1]
+            self.kx0 = InputParameters.k0[0]
+            self.ky0 = InputParameters.k0[1]
 
         self.x0 = constants.r0[0]
         self.y0 = constants.r0[1]
@@ -51,7 +51,7 @@ class Setup(SingleModeTurbulenceProfile):
         self.dkxdnedx = constants.dkxdnedx
         self.dkydnedx = constants.dkydnedx
 
-        self.turbulence_profile = SingleModeTurbulenceProfile(input_parameters.dne0, input_parameters.q0)
+        self.turbulence_profile = SingleModeTurbulenceProfile(InputParameters.dne0, InputParameters.q0)
         self.dnedne = self.turbulence_profile.dnedne()
         self.dnednedx = self.dnednedx()
         self.dnedxdnedx = self.dnedxdnedx()
@@ -60,8 +60,8 @@ class Setup(SingleModeTurbulenceProfile):
                  self.dydky0, self.dkxdkx0, self.dkxdky0, self.dkydky0, self.dxdne, self.dydne, \
                  self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx, self.dkxdnedx, self.dkydnedx
 
-        self.num_points = input_parameters.num_points
-        self.abs_err = input_parameters.abs_err
-        self.rel_err = input_parameters.rel_err
-        self.stop_time = input_parameters.stop_time
-        self.file_name = input_parameters.file_name
+        self.num_points = InputParameters.num_points
+        self.abs_err = InputParameters.abs_err
+        self.rel_err = InputParameters.rel_err
+        self.stop_time = InputParameters.stop_time
+        self.file_name = InputParameters.file_name

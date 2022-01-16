@@ -9,7 +9,7 @@ class AverageRays(Setup):
 
         super().__init__()
 
-        self.p = [self.dne0 ** 2 / 2, self.q_vector[0]]
+        self.p = [self.amplitude ** 2 / 2, self.q_vector[0]]
 
     #Equations from Appendix B (Bizarro et. al paper);
     #dydy, dxdy, dxdx, dky, dkx, dy, dx are not used;
