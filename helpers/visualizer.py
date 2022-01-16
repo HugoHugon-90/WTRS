@@ -1,10 +1,10 @@
-from helpers.dsolver import Dsolver
 from numpy import loadtxt
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import *
+from single_mode.average_rays import AverageRays
 
 
-class Visualizer(Dsolver):
+class Visualizer(AverageRays):
 
     def __init__(self, figsizel = 6, figsizew = 4.5,
                  xlabel = "t", ylabel = "", linewidth = 1, has_grid = True,
