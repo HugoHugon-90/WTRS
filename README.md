@@ -30,3 +30,5 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 
 - Output example:
 ![](.README_images/0b33fac4.png)
+  
+  
