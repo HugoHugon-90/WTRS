@@ -1,6 +1,8 @@
-from numpy import loadtxt
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import *
+from numpy import loadtxt
+
+from helpers import constants as const
 from single_mode.average_rays import AverageRays
 
 
@@ -42,5 +44,5 @@ class Visualizer(AverageRays):
         plt.legend([r'$\left< \delta x \delta x \right>$'], prop=FontProperties(size=self.fontsize))
         plt.title(self.title)
 
-        fig = self.figname + "." + self.figformat
+        fig = const.output_location + "/" + self.figname + "." + self.figformat
         plt.savefig(fig, dpi=self.dpi)

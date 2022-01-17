@@ -6,16 +6,16 @@ from single_mode.average_rays import AverageRays
 def run():
 
     #
-    average_ray =  AverageRays()
+    average_ray = AverageRays()
 
-    dsolver = OdeSolver(average_ray.aux_integrator_func, average_ray.w,
+    ode_solver = OdeSolver(average_ray.aux_integrator_func, average_ray.w,
                         average_ray.stop_time, average_ray.num_points,
                         average_ray.p, average_ray.abs_err, average_ray.rel_err,
                         average_ray.file_name)
 
     visualizer = Visualizer()
 
-    dsolver.integrator()
+    ode_solver.integrator()
     visualizer.plot_figure()
 
 
