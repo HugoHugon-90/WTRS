@@ -1,31 +1,18 @@
 from helpers import constants
-from single_mode import input_parameters
-from single_mode.turbprofile import TurbProfile
+from input_handlers.single_mode_input_handler import SingleModeInputHandler
+from single_mode.single_mode_turbulence_profile import SingleModeTurbulenceProfile
 
 
-class Setup(TurbProfile):
+class Setup(SingleModeTurbulenceProfile):
 
     def __init__(self):
-        super().__init__(input_parameters.dne0, input_parameters.q0)
 
-        self.input_type = input_parameters.input_type
+        input_params = SingleModeInputHandler(f"{constants.input_location}/{constants.single_mode_input_json}")
 
-        if self.input_type == "parallel":
-            self.kx0 = constants.k0_par[0]
-            self.ky0 = constants.k0_par[1]
+        super().__init__(input_params.amp, [input_params.q0x, input_params.q0y])
 
-        elif self.input_type == "perpendicular":
-            self.kx0 = constants.k0_perp[0]
-            self.ky0 = constants.k0_perp[1]
-
-        elif self.input_type == "oblique":
-            self.kx0 = constants.k0_obl[0]
-            self.ky0 = constants.k0_obl[1]
-
-        else:
-            self.kx0 = input_parameters.k0[0]
-            self.ky0 = input_parameters.k0[1]
-
+        self.kx0 = input_params.k0x
+        self.ky0 = input_params.k0y
         self.x0 = constants.r0[0]
         self.y0 = constants.r0[1]
         self.dx0 = constants.dx0
@@ -51,8 +38,8 @@ class Setup(TurbProfile):
         self.dkxdnedx = constants.dkxdnedx
         self.dkydnedx = constants.dkydnedx
 
-        self.n_profile = TurbProfile(input_parameters.dne0, input_parameters.q0)
-        self.dnedne = self.n_profile.dnedne()
+        self.turbulence_profile = SingleModeTurbulenceProfile(input_params.amp, [input_params.q0x, input_params.q0y])
+        self.dnedne = self.turbulence_profile.dnedne()
         self.dnednedx = self.dnednedx()
         self.dnedxdnedx = self.dnedxdnedx()
 
@@ -60,10 +47,8 @@ class Setup(TurbProfile):
                  self.dydky0, self.dkxdkx0, self.dkxdky0, self.dkydky0, self.dxdne, self.dydne, \
                  self.dkxdne, self.dkydne, self.dxdnedx, self.dydnedx, self.dkxdnedx, self.dkydnedx
 
-
-        self.num_points = input_parameters.num_points
-        self.window = input_parameters.window
-        self.abserr = input_parameters.abserr
-        self.relerr = input_parameters.relerr
-        self.stop_time = input_parameters.stop_time
-        self.file_name = input_parameters.file_name
+        self.num_points = input_params.num_points
+        self.abs_err = input_params.abs_err
+        self.rel_err = input_params.rel_err
+        self.stop_time = input_params.stop_time
+        self.file_name = input_params.file_name
