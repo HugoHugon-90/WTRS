@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
-from matplotlib.font_manager import *
 from numpy import loadtxt
+import numpy as np
 
 from helpers import constants as const
 from single_mode.average_rays import AverageRays
@@ -32,16 +32,21 @@ class Visualizer(AverageRays):
 
     def plot_figure(self):
 
-        t, x1 = loadtxt(self.file_name, unpack=True)
+        loaded_data = loadtxt(self.file_name, unpack=True)
         plt.xlabel(self.xlabel)
         plt.ylabel(self.ylabel)
         plt.grid(self.has_grid)
 
-        plt.figure(1, figsize=(self.figsizel, self.figsizew))
+        fg = plt.figure(1, figsize=(self.figsizel, self.figsizew))
+        color = iter(plt.cm.rainbow(np.linspace(0, 1, len(self.plot_params))))
+        plt_param = iter(self.plot_params)
+        for plt_num in range(1, len(self.plot_params)+1):
+            c = next(color)
+            pp = next(plt_param)
+            plt.plot(loaded_data[0], loaded_data[plt_num], c = c, label = pp, linewidth = self.lw)
 
-        plt.plot(t, x1, self.colour, linewidth=self.lw)
+        fg.legend( loc = "upper right")
 
-        plt.legend([r'$\left< \delta x \delta x \right>$'], prop=FontProperties(size=self.fontsize))
         plt.title(self.title)
 
         fig = const.output_location + "/" + self.figname + "." + self.figformat

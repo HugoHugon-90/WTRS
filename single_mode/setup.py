@@ -51,4 +51,7 @@ class Setup(SingleModeTurbulenceProfile):
         self.abs_err = input_params.abs_err
         self.rel_err = input_params.rel_err
         self.stop_time = input_params.stop_time
+
         self.file_name = input_params.file_name
+
+        self.plot_params = input_params.plot_params

@@ -22,7 +22,8 @@ RAY_PARAMS_CONFIGURATION_ILL_DEFINED_MESSAGE = "If the field 'input_configuratio
 TURBULENCE_AMPLITUDE_ILL_DEFINED_CODE = "input_error_00004"
 TURBULENCE_AMPLITUDE_ILL_DEFINED_MESSAGE = "Turbulence amplitude must lie within the interval [0, 0.15]"
 
-
+AT_LEAST_ONE_PLOT_PARAM_CODE = "input_error_00005"
+AT_LEAST_ONE_PLOT_PARAM_MESSAGE = "At least one input parameter must be defined to plot as a result (e.g. 'x')"
 
 #run-time errors
 

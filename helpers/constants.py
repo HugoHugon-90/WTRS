@@ -2,13 +2,15 @@ from cmath import sqrt
 
 # inputs
 single_mode_input_configuration_reserved_words = {'parallel', 'perpendicular', 'oblique', ''}
-single_mode_json_input_mandatory_key_list = {'ray_params', 'integrator_params'}
+single_mode_json_input_mandatory_key_list = {'ray_params', 'integrator_params', 'quantities_to_plot'}
 single_mode_json_ray_xor_params_key_list = {'input_type', 'k0_angle_degrees'}
 single_mode_json_ray_mandatory_params_key_list = {'turbulence_amplitude', 'turbulence_wavenumber'}
 
 single_mode_json_turb_wavenumb_params_key_list = {'q0x', 'q0y', 'q0z'}
 
 single_mode_json_integrator_params_key_list = {'num_points', 'stop_time', 'abs_err', 'rel_err'}
+
+plot_vs_integrator_dict = {'x': 0, 'y' : 1, 'kx': 2, 'ky': 3, 'dxdx':4, 'dxdy':5, 'dydy':6}
 
 # files
 input_location = "WTRS/input_files"
