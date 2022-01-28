@@ -10,7 +10,7 @@ class Setup(SingleModeTurbulenceProfile):
         input_params = SingleModeInputHandler(f"{constants.input_location}/{constants.single_mode_input_json}")
 
         super().__init__(input_params.amp, [input_params.q0x, input_params.q0y])
-
+        self.k0_angle = input_params.k0_angle
         self.kx0 = input_params.k0x
         self.ky0 = input_params.k0y
         self.x0 = constants.r0[0]

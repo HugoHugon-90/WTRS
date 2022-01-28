@@ -29,10 +29,10 @@ class Visualizer(AverageRays):
         self.title = title
         self.has_grid = has_grid
 
-        fn = ""
+        fn = str(self.k0_angle)
         for p in self.plot_params:
             fn = fn + "_" + p
-        self.figname = fn[1:]
+        self.figname = fn
 
     def plot_figure(self):
 

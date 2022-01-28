@@ -1,6 +1,6 @@
 {
   "ray_params": {
-    "input_configuration": "oblique",
+    "input_configuration": "",
     "k0_angle_degrees": 65.0,
     "turbulence_amplitude": 0.04,
     "turbulence_wavenumber": {
