@@ -5,7 +5,7 @@ from single_mode.average_rays import AverageRays
 
 def run():
 
-    #
+    #initialize objects
     average_ray = AverageRays()
 
     ode_solver = OdeSolver(average_ray.aux_integrator_func, average_ray.w,
@@ -15,6 +15,7 @@ def run():
 
     visualizer = Visualizer()
 
+    #run code
     ode_solver.integrator()
     visualizer.plot_figure()
 

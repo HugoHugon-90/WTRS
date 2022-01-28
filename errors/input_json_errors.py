@@ -71,3 +71,10 @@ class WrongInputWaveVectorError(Exception):
             return error + f" The field 'input_type' = '{self.inputType}' is invalid"
         else:
             return error
+
+class AtLeastOnePLotQuantitieError(Exception):
+
+    def __str__(self):
+        error = ErrorHelpers.error_printer(const.AT_LEAST_ONE_PLOT_PARAM_CODE,
+                                           const.AT_LEAST_ONE_PLOT_PARAM_MESSAGE)
+        return error

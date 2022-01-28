@@ -29,6 +29,6 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 - \kappa_x[y]_0, x[y]_0 refer to initial conditions for normalized wavevectors and position, respectively 
 
 - Output example:
-![](.README_images/0b33fac4.png)
+![](.README_images/65.0_dxdx_dxdy_dydy.png)
   
   
