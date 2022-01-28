@@ -22,13 +22,17 @@ class Visualizer(AverageRays):
         self.ylabel = ylabel
         self.lw = linewidth
         self.colour = colour
-        self.figname = figname
         self.figformat = figformat
         self.dpi = dpi
         self.fontsize = fontsize
         self.legend = legend
         self.title = title
         self.has_grid = has_grid
+
+        fn = ""
+        for p in self.plot_params:
+            fn = fn + "_" + p
+        self.figname = fn[1:]
 
     def plot_figure(self):
 
