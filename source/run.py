@@ -1,23 +1,31 @@
 from helpers.ode_solver import OdeSolver
 from helpers.visualizer import Visualizer
+from input_handlers.single_mode_input_handler import SingleModeInputHandler
 from single_mode.average_rays import AverageRays
+from helpers import constants
 from single_mode.monte_carlo_rays import MonteCarloRays
+from single_mode.setup import Setup
 
 
 def run():
 
-    #initialize objects
-    average_ray = AverageRays()
+    # Initialize and setup vars from input file
+    _init = SingleModeInputHandler(f"{constants.input_location}/{constants.single_mode_input_json}")
+    _setup = Setup(_init)
 
-    average_ray_ode_solver = OdeSolver(average_ray.aux_integrator_func, average_ray.w,
-                        average_ray.stop_time, average_ray.num_points,
-                        average_ray.p, average_ray.abs_err, average_ray.rel_err,
-                        average_ray.file_name)
+    # Instatiate ray-objects (our formalism and Monte Carlo)
+    _average_ray = AverageRays(_setup)
+    _mc_ray = None
 
-    visualizer = Visualizer()
+    if _init.activate_monte_carlo:
+        _mc_ray = MonteCarloRays(_setup)
 
-    #run code
-    average_ray_ode_solver.integrator()
+    # Instantiate and execute ODE solver
+    _solver = OdeSolver(_setup, _average_ray, _mc_ray)
+    _solver.integrator()
+
+    # Instantiate visualizer and plot figure
+    visualizer = Visualizer(_setup)
     visualizer.plot_figure()
 
 

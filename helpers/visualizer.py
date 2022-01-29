@@ -3,19 +3,18 @@ from numpy import loadtxt
 import numpy as np
 
 from helpers import constants as const
-from single_mode.average_rays import AverageRays
-from single_mode.monte_carlo_rays import MonteCarloRays
+from single_mode.setup import Setup
 
 
-class Visualizer(AverageRays):
+class Visualizer:
 
-    def __init__(self, figsizel = 6, figsizew = 4.5,
-                 xlabel = "t", ylabel = "", linewidth = 1, has_grid = True,
-                 colour = 'b', legend = '', figname = 'figure',
-                 figformat = 'png', dpi = 600, fontsize = 16,
-                 title = "average ray evolution"):
+    def __init__(self, setup: Setup, figsizel=6, figsizew=4.5,
+                 xlabel="t", ylabel="", linewidth=1, has_grid=True,
+                 colour='b', legend='', figname='figure',
+                 figformat='png', dpi=600, fontsize=16,
+                 title="average ray evolution"):
 
-        super().__init__()
+        self.setup = setup
 
         self.figsizel = figsizel
         self.figsizew = figsizew
@@ -30,27 +29,27 @@ class Visualizer(AverageRays):
         self.title = title
         self.has_grid = has_grid
 
-        fn = str(self.k0_angle)
-        for p in self.plot_params:
+        fn = str(self.setup.k0_angle)
+        for p in self.setup.plot_params:
             fn = fn + "_" + p
         self.figname = fn
 
     def plot_figure(self):
 
-        loaded_data = loadtxt(self.file_name, unpack=True)
+        loaded_data = loadtxt(self.setup.file_name, unpack=True)
         plt.xlabel(self.xlabel)
         plt.ylabel(self.ylabel)
         plt.grid(self.has_grid)
 
         fg = plt.figure(1, figsize=(self.figsizel, self.figsizew))
-        color = iter(plt.cm.rainbow(np.linspace(0, 1, len(self.plot_params))))
-        plt_param = iter(self.plot_params)
-        for plt_num in range(1, len(self.plot_params)+1):
+        color = iter(plt.cm.rainbow(np.linspace(0, 1, len(self.setup.plot_params))))
+        plt_param = iter(self.setup.plot_params)
+        for plt_num in range(1, len(self.setup.plot_params) + 1):
             c = next(color)
             pp = next(plt_param)
-            plt.plot(loaded_data[0], loaded_data[plt_num], c = c, label = pp, linewidth = self.lw)
+            plt.plot(loaded_data[0], loaded_data[plt_num], c=c, label=pp, linewidth=self.lw)
 
-        fg.legend( loc = "upper right")
+        fg.legend(loc="upper right")
 
         plt.title(self.title)
 

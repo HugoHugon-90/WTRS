@@ -3,13 +3,11 @@ from single_mode.setup import Setup
 
 
 # 2-D evolution eqs for the average rays; single mode in the x-direction
-class AverageRays(Setup):
+class AverageRays:
 
-    def __init__(self):
+    def __init__(self, setup: Setup):
 
-        super().__init__()
-
-        self.p = [self.amplitude ** 2 / 2, self.q_vector[0]]
+        self.p = [setup.amplitude ** 2 / 2, setup.q0_vector[0]]
 
     #Equations from Appendix B (Bizarro et. al paper);
     #dydy, dxdy, dxdx, dky, dkx, dy, dx are not used;

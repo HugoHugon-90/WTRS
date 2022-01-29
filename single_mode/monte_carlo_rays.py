@@ -1,30 +1,26 @@
 from math import sqrt
-from math import cos, sin, pi
+from math import cos, pi
 from random import random
 
 from single_mode.setup import Setup
 
 # 2-D evolution eqs for the MonteCarlo rays; single mode in the x-direction
-from single_mode.single_mode_turbulence_profile import SingleModeTurbulenceProfile
+class MonteCarloRays:
 
+    def __init__(self, setup: Setup):
 
-class MonteCarloRays(Setup):
-
-    def __init__(self, num_mc_iterations=100):
-        super().__init__()
-
-        self.num_mc_iterations = num_mc_iterations
+        self.setup = setup
 
         self.phi_realizations = []
-        for _ in range(self.num_mc_iterations):
+        for _ in range(self.setup.mc_num_realizations):
             self.phi_realizations.append(2 * pi * random())
 
         self.it = 0
-        self.p = [self.amplitude, self.q_vector[0], self.phi_realizations[self.it]]
+        self.p = [self.setup.amplitude, self.setup.q0_vector[0], self.phi_realizations[self.it]]
 
     def set_phi(self, it):
         self.it = it
-        self.p = [self.amplitude, self.q_vector[0], self.phi_realizations[self.it]]
+        self.p = [self.setup.amplitude, self.setup.q0_vector[0], self.phi_realizations[self.it]]
 
     # Ray tracing equations for single mode, not expanding asymptotically, thus
     # keeping the random component of the turbulence /phi to be instantiated

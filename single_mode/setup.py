@@ -5,11 +5,15 @@ from single_mode.single_mode_turbulence_profile import SingleModeTurbulenceProfi
 
 class Setup(SingleModeTurbulenceProfile):
 
-    def __init__(self):
-
-        input_params = SingleModeInputHandler(f"{constants.input_location}/{constants.single_mode_input_json}")
+    def __init__(self, input_params: SingleModeInputHandler):
 
         super().__init__(input_params.amp, [input_params.q0x, input_params.q0y])
+
+        self.stop_time = input_params.stop_time
+        self.num_points = input_params.num_points
+
+        self.amplitude = input_params.amp
+        self.q0_vector = [input_params.q0x, input_params.q0y]
 
         self.mc_file_name = input_params.file_name_mc
         self.mc_is_active = input_params.activate_monte_carlo
