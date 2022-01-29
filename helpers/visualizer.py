@@ -4,6 +4,7 @@ import numpy as np
 
 from helpers import constants as const
 from single_mode.average_rays import AverageRays
+from single_mode.monte_carlo_rays import MonteCarloRays
 
 
 class Visualizer(AverageRays):

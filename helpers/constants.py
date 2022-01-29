@@ -2,7 +2,7 @@ from cmath import sqrt
 
 # inputs
 single_mode_input_configuration_reserved_words = {'parallel', 'perpendicular', 'oblique', ''}
-single_mode_json_input_mandatory_key_list = {'ray_params', 'integrator_params', 'quantities_to_plot'}
+single_mode_json_input_mandatory_key_list = {'ray_params', 'integrator_params', 'quantities_to_plot', 'monte_carlo'}
 single_mode_json_ray_xor_params_key_list = {'input_type', 'k0_angle_degrees'}
 single_mode_json_ray_mandatory_params_key_list = {'turbulence_amplitude', 'turbulence_wavenumber'}
 
@@ -16,6 +16,7 @@ plot_vs_integrator_dict = {'x': 0, 'y' : 1, 'kx': 2, 'ky': 3, 'dxdx':4, 'dxdy':5
 input_location = "WTRS/input_files"
 single_mode_input_json = "single_mode_input.json"
 output_location = "WTRS/output_files"
+output_location_mc = "WTRS/output_files/monte_carlo"
 
 # unperturbed wavenumber
 k0_obl = [1. / abs(sqrt(2)), 1. / abs(sqrt(2))]

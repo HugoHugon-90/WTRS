@@ -1,4 +1,4 @@
-from cmath import cos
+from math import cos, sin
 from profiles.turbulence_profile import TurbulenceProfile
 
 
@@ -9,6 +9,9 @@ class SingleModeTurbulenceProfile(TurbulenceProfile):
     # turbulence profile ( 0 < = phi < = 2Pi )
     def profile(self, x, y, phi):
         return self.amplitude * cos(self.q_vector[0] * x + phi)
+
+    def d_profile_dx(self, x, y, phi):
+        return - self.amplitude * self.q_vector[0]* sin(self.q_vector[0] * x + phi)
 
     # source terms
     # Eq.(42)

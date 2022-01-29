@@ -1,4 +1,5 @@
 import math as math
+from venv import logger
 
 import errors.helpers as err_h
 import errors.input_json_errors as input_err
@@ -18,11 +19,14 @@ class SingleModeInputHandler(JsonHandler):
         self.q0x = None
         self.q0y = None
         self.file_name = f'{const.output_location}/file.txt'
+        self.file_name_mc = f'{const.output_location_mc}/file.txt'
         self.num_points = 10000
         self.stop_time = 1000.0
         self.abs_err = 1.0e-8
         self.rel_err = 1.0e-6
         self.plot_params = []
+        self.activate_monte_carlo = False
+        self.monte_carlo_num_realizations = 100
 
         super().__init__(json_file)
 
@@ -70,6 +74,7 @@ class SingleModeInputHandler(JsonHandler):
                     raise input_err.WrongRayParamsError()
 
                 self.file_name = f"{const.output_location}/k0_angle_{self.k0_angle}_deg.txt"
+                self.file_name_mc = f"{const.output_location_mc}/mc_k0_angle_{self.k0_angle}_deg_"
 
                 if 'turbulence_amplitude' in list(dict(self.json_data['ray_params']).keys()):
 
@@ -104,7 +109,7 @@ class SingleModeInputHandler(JsonHandler):
                 else:
                     input_err.FieldNotFoundError('turbulence_wavenumber', 'ray_params')
 
-            if k == 'integrator_params':
+            elif k == 'integrator_params':
                 integ_keys = list(dict(self.json_data['integrator_params']).keys())
 
                 if 'num_points' in integ_keys:
@@ -127,7 +132,7 @@ class SingleModeInputHandler(JsonHandler):
                     err_h.ErrorHelpers.check_type_error(re, float)
                     self.rel_err = re
 
-            if k == 'quantities_to_plot':
+            elif k == 'quantities_to_plot':
                 plot_keys = list(dict(self.json_data['quantities_to_plot']).keys())
 
                 if 'x' in plot_keys:
@@ -174,6 +179,26 @@ class SingleModeInputHandler(JsonHandler):
 
                 if len(self.plot_params) == 0:
                     raise input_err.AtLeastOnePLotQuantitieError()
+
+            elif k == 'monte_carlo':
+                monte_carlo_keys = list(dict(self.json_data['monte_carlo']).keys())
+                if 'active' in monte_carlo_keys:
+                    active = self.json_data['monte_carlo']['active']
+                    err_h.ErrorHelpers.check_type_error(active, bool)
+                    self.activate_monte_carlo = active
+
+                    if 'num_realizations' in monte_carlo_keys:
+                        num_realizations = self.json_data['monte_carlo']['num_realizations']
+                        err_h.ErrorHelpers.check_type_error(num_realizations, int)
+                        self.monte_carlo_num_realizations = num_realizations
+
+                    elif self.activate_monte_carlo:
+                        logger.warning("Field 'num_realizations' was not found. Monte Carlo calculations "
+                                       "will be performed with "
+                                       + str(self.monte_carlo_num_realizations) + " realizations")
+                else:
+                    logger.warning("Field 'active' was not found and is set to false; Monte Carlo calculations "
+                                   "will not be performed")
 
 
 

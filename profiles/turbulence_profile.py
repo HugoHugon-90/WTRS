@@ -13,3 +13,4 @@ class TurbulenceProfile(abc.ABC):
     @abc.abstractmethod
     def profile(self, x, y, phi):
         pass
+

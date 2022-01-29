@@ -20,6 +20,7 @@ class AverageRays(Setup):
         x, y, kx, ky, dxdx, dxdy, dydy, dxdkx, dxdky, dydkx, dydky, dkxdkx, dkxdky, dkydky, \
         dxdne, dydne, dkxdne, dkydne, dxdnedx, dydnedx, dkxdnedx, dkydnedx = w
 
+        # A = \delta n_e ^ 2 /2
         A, q = p
 
         # Eqs. (B1)
