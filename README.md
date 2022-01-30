@@ -40,3 +40,5 @@ TODO:
 - Include possibility of plotting dxdx, dydy, dkxdkx, dkydky with Monte Carlo
 - Include trajectory mode, in which the ray trajectory is depicted with the rms-spreading,
  and all the Monte Carlo Rays are plotted in this case (see paper)
+- Refactor output locations and naming
+- Refactor plot title, font, etc.
