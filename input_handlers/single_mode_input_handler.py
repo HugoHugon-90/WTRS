@@ -74,7 +74,7 @@ class SingleModeInputHandler(JsonHandler):
                     raise input_err.WrongRayParamsError()
 
                 self.file_name = f"{const.output_location}/k0_angle_{self.k0_angle}_deg.txt"
-                self.file_name_mc = f"{const.output_location_mc}/mc_k0_angle_{self.k0_angle}_deg_"
+                self.file_name_mc = f"{const.output_location_mc}/mc_k0_angle_{self.k0_angle}_deg_.txt"
 
                 if 'turbulence_amplitude' in list(dict(self.json_data['ray_params']).keys()):
 
@@ -178,19 +178,22 @@ class SingleModeInputHandler(JsonHandler):
                         self.plot_params.append('dydy')
 
                 if len(self.plot_params) == 0:
-                    raise input_err.AtLeastOnePLotQuantitieError()
+                    raise input_err.AtLeastOnePlotQuantitieError()
 
             elif k == 'monte_carlo':
+
                 monte_carlo_keys = list(dict(self.json_data['monte_carlo']).keys())
                 if 'active' in monte_carlo_keys:
                     active = self.json_data['monte_carlo']['active']
                     err_h.ErrorHelpers.check_type_error(active, bool)
+                    if len(self.plot_params) != 1 and active is True:
+                        raise input_err.MonteCarloWithMoreThanOnePlotQuantitiesError()
                     self.activate_monte_carlo = active
 
                     if 'num_realizations' in monte_carlo_keys:
-                        num_realizations = self.json_data['monte_carlo']['num_realizations']
-                        err_h.ErrorHelpers.check_type_error(num_realizations, int)
-                        self.monte_carlo_num_realizations = num_realizations
+                                num_realizations = self.json_data['monte_carlo']['num_realizations']
+                                err_h.ErrorHelpers.check_type_error(num_realizations, int)
+                                self.monte_carlo_num_realizations = num_realizations
 
                     elif self.activate_monte_carlo:
                         logger.warning("Field 'num_realizations' was not found. Monte Carlo calculations "

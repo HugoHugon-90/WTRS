@@ -32,3 +32,11 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 ![](.README_images/65.0_dxdx_dxdy_dydy.png)
   
   
+TODO:
+- seed random phases so the randomness doesn't get stuck
+- review math (Monte Carlo and formalism equations)
+- include info and logging (especially at the input handler)
+- include timer in the run() method
+- Include possibility of plotting dxdx, dydy, dkxdkx, dkydky with Monte Carlo
+- Include trajectory mode, in which the ray trajectory is depicted with the rms-spreading,
+ and all the Monte Carlo Rays are plotted in this case (see paper)

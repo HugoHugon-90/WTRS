@@ -36,22 +36,44 @@ class Visualizer:
 
     def plot_figure(self):
 
-        loaded_data = loadtxt(self.setup.file_name, unpack=True)
-        plt.xlabel(self.xlabel)
-        plt.ylabel(self.ylabel)
-        plt.grid(self.has_grid)
+        if self.setup.mc_is_active:
+            loaded_data = loadtxt(self.setup.file_name, unpack=True)
+            loaded_data_mc = loadtxt(self.setup.mc_file_name, unpack=True)
 
-        fg = plt.figure(1, figsize=(self.figsizel, self.figsizew))
-        color = iter(plt.cm.rainbow(np.linspace(0, 1, len(self.setup.plot_params))))
-        plt_param = iter(self.setup.plot_params)
-        for plt_num in range(1, len(self.setup.plot_params) + 1):
-            c = next(color)
-            pp = next(plt_param)
-            plt.plot(loaded_data[0], loaded_data[plt_num], c=c, label=pp, linewidth=self.lw)
+            plt.xlabel(self.xlabel)
+            plt.ylabel(self.ylabel)
+            plt.grid(self.has_grid)
 
-        fg.legend(loc="upper right")
+            fg = plt.figure(1, figsize=(self.figsizel, self.figsizew))
+            plt.plot(loaded_data[0], loaded_data[1], c="red",
+                     label=self.setup.plot_params[0], linewidth=self.lw)
+            plt.plot(loaded_data_mc[0], loaded_data_mc[1], c="blue",
+                     label= "MC_" + self.setup.plot_params[0], linewidth=self.lw)
 
-        plt.title(self.title)
+            fg.legend(loc="upper right")
 
-        fig = const.output_location + "/" + self.figname + "." + self.figformat
-        plt.savefig(fig, dpi=self.dpi)
+            plt.title(self.title)
+
+            fig = const.output_location + "/" + "MC_" + self.figname + "." + self.figformat
+            plt.savefig(fig, dpi=self.dpi)
+
+        else:
+            loaded_data = loadtxt(self.setup.file_name, unpack=True)
+            plt.xlabel(self.xlabel)
+            plt.ylabel(self.ylabel)
+            plt.grid(self.has_grid)
+
+            fg = plt.figure(1, figsize=(self.figsizel, self.figsizew))
+            color = iter(plt.cm.rainbow(np.linspace(0, 1, len(self.setup.plot_params))))
+            plt_param = iter(self.setup.plot_params)
+            for plt_num in range(1, len(self.setup.plot_params) + 1):
+                c = next(color)
+                pp = next(plt_param)
+                plt.plot(loaded_data[0], loaded_data[plt_num], c=c, label=pp, linewidth=self.lw)
+
+            fg.legend(loc="upper right")
+
+            plt.title(self.title)
+
+            fig = const.output_location + "/" + self.figname + "." + self.figformat
+            plt.savefig(fig, dpi=self.dpi)

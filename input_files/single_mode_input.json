@@ -1,7 +1,7 @@
 {
   "ray_params": {
-    "input_configuration": "",
-    "k0_angle_degrees": 65.0,
+    "input_configuration": "oblique",
+    "k0_angle_degrees": 51.0,
     "turbulence_amplitude": 0.04,
     "turbulence_wavenumber": {
       "q0x": 0.04,
@@ -35,6 +35,7 @@
     "dkydnedx": false
   },
   "monte_carlo": {
-    "active": true
+    "active": true,
+    "num_realizations": 500
   }
 }
