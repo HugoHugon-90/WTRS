@@ -9,6 +9,8 @@ class Setup(SingleModeTurbulenceProfile):
 
         super().__init__(input_params.amp, [input_params.q0x, input_params.q0y])
 
+        self.plot_trajectory = input_params.plot_trajectory
+
         self.stop_time = input_params.stop_time
         self.num_points = input_params.num_points
 

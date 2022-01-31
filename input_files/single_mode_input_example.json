@@ -1,7 +1,7 @@
 {
   "ray_params": {
-    "input_configuration": "",
-    "k0_angle_degrees": 65.0,
+    "input_configuration": "oblique",
+    "k0_angle_degrees": 51.0,
     "turbulence_amplitude": 0.04,
     "turbulence_wavenumber": {
       "q0x": 0.04,
@@ -9,18 +9,18 @@
     }
   },
   "integrator_params": {
-    "num_points" : 10000,
-    "stop_time": 1000.0,
+    "num_points" : 300,
+    "stop_time": 500.0,
     "abs_err": 1.0e-8,
     "rel_err": 1.0e-6
   },
   "quantities_to_plot": {
-    "x": true,
+    "x": false,
     "y": false,
     "kx": false,
     "ky": false,
     "dxdx": false,
-    "dxdy": false,
+    "dxdy": true,
     "dydy": false,
     "dxdkx": false,
     "dkxdky": false,
@@ -33,5 +33,9 @@
     "dydnedx": false,
     "dkxdnedx": false,
     "dkydnedx": false
+  },
+  "monte_carlo": {
+    "active": true,
+    "num_realizations": 100
   }
 }

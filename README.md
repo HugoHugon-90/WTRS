@@ -29,16 +29,19 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 - \kappa_x[y]_0, x[y]_0 refer to initial conditions for normalized wavevectors and position, respectively 
 
 - Output example:
-![](.README_images/65.0_dxdx_dxdy_dydy.png)
-  
-  
+![](.README_images/45.0_trajectories.png)
+![](.README_images/75.0_trajectories.png)
+![](.README_images/90.0_trajectories.png)
+
+
 TODO:
 - seed random phases so the randomness doesn't get stuck
-- review math (Monte Carlo and formalism equations)
+- solve constructor issue/bug (randomly reassigning 'self' vars)
+- review math (Monte Carlo and formalism equations) : DONE ---> solved major bugs
 - include info and logging (especially at the input handler)
 - include timer in the run() method
 - Include possibility of plotting dxdx, dydy, dkxdkx, dkydky with Monte Carlo
 - Include trajectory mode, in which the ray trajectory is depicted with the rms-spreading,
- and all the Monte Carlo Rays are plotted in this case (see paper)
+ and all the Monte Carlo Rays are plotted in this case (see paper): PARTIALLY DONE ---> missing the MC rays
 - Refactor output locations and naming
-- Refactor plot title, font, etc.
+- Refactor plot title, font, etc. according to the input
