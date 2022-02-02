@@ -1,4 +1,5 @@
 import math as math
+from venv import logger
 
 import errors.helpers as err_h
 import errors.input_json_errors as input_err
@@ -10,6 +11,8 @@ class SingleModeInputHandler(JsonHandler):
 
     def __init__(self, json_file):
 
+        super().__init__(json_file)
+
         self.input_configuration = None
         self.k0_angle = None
         self.k0x = None
@@ -18,13 +21,13 @@ class SingleModeInputHandler(JsonHandler):
         self.q0x = None
         self.q0y = None
         self.file_name = f'{const.output_location}/file.txt'
+        self.file_name_mc = f'{const.output_location_mc}/file.txt'
         self.num_points = 10000
         self.stop_time = 1000.0
         self.abs_err = 1.0e-8
         self.rel_err = 1.0e-6
         self.plot_params = []
-
-        super().__init__(json_file)
+        self.monte_carlo_num_realizations = 100
 
         for k in const.single_mode_json_input_mandatory_key_list:
             if k not in self.keys:
@@ -70,6 +73,7 @@ class SingleModeInputHandler(JsonHandler):
                     raise input_err.WrongRayParamsError()
 
                 self.file_name = f"{const.output_location}/k0_angle_{self.k0_angle}_deg.txt"
+                self.file_name_mc = f"{const.output_location_mc}/mc_k0_angle_{self.k0_angle}_deg_.txt"
 
                 if 'turbulence_amplitude' in list(dict(self.json_data['ray_params']).keys()):
 
@@ -104,7 +108,7 @@ class SingleModeInputHandler(JsonHandler):
                 else:
                     input_err.FieldNotFoundError('turbulence_wavenumber', 'ray_params')
 
-            if k == 'integrator_params':
+            elif k == 'integrator_params':
                 integ_keys = list(dict(self.json_data['integrator_params']).keys())
 
                 if 'num_points' in integ_keys:
@@ -127,7 +131,11 @@ class SingleModeInputHandler(JsonHandler):
                     err_h.ErrorHelpers.check_type_error(re, float)
                     self.rel_err = re
 
-            if k == 'quantities_to_plot':
+            elif k == 'plot_trajectory' and self.plot_trajectory:
+                self.file_name = f"{const.output_location}/trajectory_k0_angle_{self.k0_angle}_deg.txt"
+                logger.info("Trajectory will be plotted, so info in 'quantities_to_plot' is muted and has no effect")
+
+            elif k == 'quantities_to_plot' and not self.plot_trajectory:
                 plot_keys = list(dict(self.json_data['quantities_to_plot']).keys())
 
                 if 'x' in plot_keys:
@@ -172,9 +180,79 @@ class SingleModeInputHandler(JsonHandler):
                     if dydyp == True:
                         self.plot_params.append('dydy')
 
-                if len(self.plot_params) == 0:
-                    raise input_err.AtLeastOnePLotQuantitieError()
+                if 'dxdne' in plot_keys:
+                    dxdnep = self.json_data['quantities_to_plot']['dxdne']
+                    err_h.ErrorHelpers.check_type_error(dxdnep, bool)
+                    if dxdnep == True:
+                        self.plot_params.append('dxdne')
+                if 'dxdnedx' in plot_keys:
+                    dxdnedxp = self.json_data['quantities_to_plot']['dxdnedx']
+                    err_h.ErrorHelpers.check_type_error(dxdnedxp, bool)
+                    if dxdnedxp == True:
+                        self.plot_params.append('dxdnedx')
 
+                if 'dxdkx' in plot_keys:
+                    dxdkx = self.json_data['quantities_to_plot']['dxdkx']
+                    err_h.ErrorHelpers.check_type_error(dxdkx, bool)
+                    if dxdkx == True:
+                        self.plot_params.append('dxdkx')
+                if 'dydky' in plot_keys:
+                    dydky = self.json_data['quantities_to_plot']['dydky']
+                    err_h.ErrorHelpers.check_type_error(dydky, bool)
+                    if dydky == True:
+                        self.plot_params.append('dydky')
+                if 'dkxdkx' in plot_keys:
+                    dkxdkx = self.json_data['quantities_to_plot']['dkxdkx']
+                    err_h.ErrorHelpers.check_type_error(dkxdkx, bool)
+                    if dkxdkx == True:
+                        self.plot_params.append('dkxdkx')
+                if 'dkxdky' in plot_keys:
+                    dkxdky = self.json_data['quantities_to_plot']['dkxdky']
+                    err_h.ErrorHelpers.check_type_error(dkxdky, bool)
+                    if dkxdky == True:
+                        self.plot_params.append('dkxdky')
+                if 'dkydky' in plot_keys:
+                    dkydky = self.json_data['quantities_to_plot']['dkydky']
+                    err_h.ErrorHelpers.check_type_error(dkydky, bool)
+                    if dkydky == True:
+                        self.plot_params.append('dkydky')
+                if 'dkxdne' in plot_keys:
+                    dkxdne = self.json_data['quantities_to_plot']['dkxdne']
+                    err_h.ErrorHelpers.check_type_error(dkxdne, bool)
+                    if dkxdne == True:
+                        self.plot_params.append('dkxdne')
+                if 'dkxdnedx' in plot_keys:
+                    dkxdnedx = self.json_data['quantities_to_plot']['dkxdnedx']
+                    err_h.ErrorHelpers.check_type_error(dkxdnedx, bool)
+                    if dkxdnedx == True:
+                        self.plot_params.append('dkxdnedx')
+                if 'dydkx' in plot_keys:
+                    dydkx = self.json_data['quantities_to_plot']['dydkx']
+                    err_h.ErrorHelpers.check_type_error(dydkx, bool)
+                    if dydkx == True:
+                        self.plot_params.append('dydkx')
 
+                if not self.plot_trajectory and len(self.plot_params) == 0:
+                    raise input_err.AtLeastOnePlotQuantitieError()
 
+            elif k == 'monte_carlo':
 
+                monte_carlo_keys = list(dict(self.json_data['monte_carlo']).keys())
+
+                if self.monte_carlo_is_active:
+                    if not self.plot_trajectory:
+                        if len(self.plot_params) != 1:
+                            raise input_err.MonteCarloWithMoreThanOnePlotQuantitiesError()
+
+                        if self.plot_params[0] not in const.monte_carlo_param_list:
+                            raise input_err.MonteCarloNotAllowedParameterError()
+
+                    if 'num_realizations' in monte_carlo_keys:
+                        num_realizations = self.json_data['monte_carlo']['num_realizations']
+                        err_h.ErrorHelpers.check_type_error(num_realizations, int)
+                        self.monte_carlo_num_realizations = num_realizations
+
+                    else:
+                        logger.warning("Field 'num_realizations' was not found. Monte Carlo calculations "
+                                       "will be performed with "
+                                       + str(self.monte_carlo_num_realizations) + " realizations")
