@@ -15,6 +15,7 @@ plot_vs_integrator_dict = {'x': 0, 'y': 1, 'kx': 2, 'ky': 3, 'dxdx': 4, 'dydy':5
                            'dxdkx':10, 'dydkx':11, 'dxdky':12, 'dydky':13,'dxdne': 14, 'dydne':15, 'dkxdne':16, 'dkydne':17,
                            'dxdnedx':18, 'dydnedx':19, 'dkxnedx':20, 'dkydnedx':21}
 
+monte_carlo_param_list =['x','y','kx','ky','dxdx','dydy','dkxdkx','dkydky']
 # files
 input_location = "WTRS/input_files"
 single_mode_input_json = "single_mode_input.json"

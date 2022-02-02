@@ -27,6 +27,10 @@ MONTE_CARLO_WITH_MORE_THAN_ONE_PLOT_PARAM_CODE = "input_error_00006"
 MONTE_CARLO_WITH_MORE_THAN_ONE_PLOT_PARAM_MESSAGE = "In order to compare with MonteCarlo, only one plot parameter " \
                                                     "must be chosen (e.g. 'x': true)"
 
+MONTE_CARLO_NOT_ALLOWED_PARAMETER_CODE = "input_error_00007"
+MONTE_CARLO_NOT_ALLOWED_PARAMETER_MESSAGE = "For now, only x, y,kx ,ky ,dxdx ,dydy ,dkxdkx ,and " \
+                                            "dkydky are allowed for Monte Carlo calculations"
+
 # run-time errors
 TYPE_ILL_DEFINED_CODE = "runtime_error_00001"
 TYPE_ILL_DEFINED_MESSAGE = "This field was somewhere instanced with the wrong type"

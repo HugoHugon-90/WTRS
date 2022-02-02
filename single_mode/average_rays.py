@@ -26,7 +26,7 @@ class AverageRays:
                + (3 / 2) * kx * (kx ** 2 * dkxdkx + ky ** 2 * dkydky + 2 * kx*ky * dkxdky) / (abs(sqrt(kx ** 2 + ky ** 2)) ** 5) \
                - (kx * (dkxdkx + dkydky) + 2 * (kx * dkxdkx + ky * dkxdky)) / (2 * abs(sqrt(kx ** 2 + ky ** 2)) ** 3) \
                - dkxdne / abs(sqrt(kx ** 2 + ky ** 2)) \
-               + kx * (kx * dkxdne + 0.*ky * 0) / (abs(sqrt(kx ** 2 + ky ** 2)) ** 3) \
+               + kx * (kx * dkxdne + 0.*ky * dkydne) / (abs(sqrt(kx ** 2 + ky ** 2)) ** 3) \
                - (kx / abs(sqrt(kx ** 2 + ky ** 2)) ) * dxdnedx
 
         dydt = ky * (1 + A) / abs(sqrt(kx ** 2 + ky ** 2)) \

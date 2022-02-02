@@ -27,10 +27,7 @@ class SingleModeInputHandler(JsonHandler):
         self.abs_err = 1.0e-8
         self.rel_err = 1.0e-6
         self.plot_params = []
-        self.activate_monte_carlo = False
         self.monte_carlo_num_realizations = 100
-        self.plot_trajectory = True
-
 
         for k in const.single_mode_json_input_mandatory_key_list:
             if k not in self.keys:
@@ -134,134 +131,128 @@ class SingleModeInputHandler(JsonHandler):
                     err_h.ErrorHelpers.check_type_error(re, float)
                     self.rel_err = re
 
-            elif k == 'plot_trajectory':
-                plt_traj = self.json_data['plot_trajectory']
-                err_h.ErrorHelpers.check_type_error(plt_traj, bool)
-                self.plot_trajectory = plt_traj
+            elif k == 'plot_trajectory' and self.plot_trajectory:
                 self.file_name = f"{const.output_location}/trajectory_k0_angle_{self.k0_angle}_deg.txt"
                 logger.info("Trajectory will be plotted, so info in 'quantities_to_plot' is muted and has no effect")
 
-            elif k == 'quantities_to_plot':
+            elif k == 'quantities_to_plot' and not self.plot_trajectory:
                 plot_keys = list(dict(self.json_data['quantities_to_plot']).keys())
 
-                if self.plot_trajectory:
-                    self.plot_params.append('x')
-                    self.plot_params.append('y')
-                    self.plot_params.append('dxdx')
-                    self.plot_params.append('dydy')
+                if 'x' in plot_keys:
+                    xp = self.json_data['quantities_to_plot']['x']
+                    err_h.ErrorHelpers.check_type_error(xp, bool)
+                    if xp:
+                        self.plot_params.append('x')
 
-                else:
-                    if 'x' in plot_keys:
-                        xp = self.json_data['quantities_to_plot']['x']
-                        err_h.ErrorHelpers.check_type_error(xp, bool)
-                        if xp:
-                            self.plot_params.append('x')
+                if 'y' in plot_keys:
+                    yp = self.json_data['quantities_to_plot']['y']
+                    err_h.ErrorHelpers.check_type_error(yp, bool)
+                    if yp:
+                        self.plot_params.append('y')
 
-                    if 'y' in plot_keys:
-                        yp = self.json_data['quantities_to_plot']['y']
-                        err_h.ErrorHelpers.check_type_error(yp, bool)
-                        if yp:
-                            self.plot_params.append('y')
+                if 'kx' in plot_keys:
+                    kxp = self.json_data['quantities_to_plot']['kx']
+                    err_h.ErrorHelpers.check_type_error(kxp, bool)
+                    if kxp:
+                        self.plot_params.append('kx')
 
-                    if 'kx' in plot_keys:
-                        kxp = self.json_data['quantities_to_plot']['kx']
-                        err_h.ErrorHelpers.check_type_error(kxp, bool)
-                        if kxp:
-                            self.plot_params.append('kx')
+                if 'ky' in plot_keys:
+                    kyp = self.json_data['quantities_to_plot']['ky']
+                    err_h.ErrorHelpers.check_type_error(kyp, bool)
+                    if kyp == True:
+                        self.plot_params.append('ky')
 
-                    if 'ky' in plot_keys:
-                        kyp = self.json_data['quantities_to_plot']['ky']
-                        err_h.ErrorHelpers.check_type_error(kyp, bool)
-                        if kyp == True:
-                            self.plot_params.append('ky')
+                if 'dxdx' in plot_keys:
+                    dxdxp = self.json_data['quantities_to_plot']['dxdx']
+                    err_h.ErrorHelpers.check_type_error(dxdxp, bool)
+                    if dxdxp == True:
+                        self.plot_params.append('dxdx')
 
-                    if 'dxdx' in plot_keys:
-                        dxdxp = self.json_data['quantities_to_plot']['dxdx']
-                        err_h.ErrorHelpers.check_type_error(dxdxp, bool)
-                        if dxdxp == True:
-                            self.plot_params.append('dxdx')
+                if 'dxdy' in plot_keys:
+                    dxdyp = self.json_data['quantities_to_plot']['dxdy']
+                    err_h.ErrorHelpers.check_type_error(dxdyp, bool)
+                    if dxdyp == True:
+                        self.plot_params.append('dxdy')
 
-                    if 'dxdy' in plot_keys:
-                        dxdyp = self.json_data['quantities_to_plot']['dxdy']
-                        err_h.ErrorHelpers.check_type_error(dxdyp, bool)
-                        if dxdyp == True:
-                            self.plot_params.append('dxdy')
+                if 'dydy' in plot_keys:
+                    dydyp = self.json_data['quantities_to_plot']['dydy']
+                    err_h.ErrorHelpers.check_type_error(dydyp, bool)
+                    if dydyp == True:
+                        self.plot_params.append('dydy')
 
-                    if 'dydy' in plot_keys:
-                        dydyp = self.json_data['quantities_to_plot']['dydy']
-                        err_h.ErrorHelpers.check_type_error(dydyp, bool)
-                        if dydyp == True:
-                            self.plot_params.append('dydy')
+                if 'dxdne' in plot_keys:
+                    dxdnep = self.json_data['quantities_to_plot']['dxdne']
+                    err_h.ErrorHelpers.check_type_error(dxdnep, bool)
+                    if dxdnep == True:
+                        self.plot_params.append('dxdne')
+                if 'dxdnedx' in plot_keys:
+                    dxdnedxp = self.json_data['quantities_to_plot']['dxdnedx']
+                    err_h.ErrorHelpers.check_type_error(dxdnedxp, bool)
+                    if dxdnedxp == True:
+                        self.plot_params.append('dxdnedx')
 
-                    if 'dxdne' in plot_keys:
-                        dxdnep = self.json_data['quantities_to_plot']['dxdne']
-                        err_h.ErrorHelpers.check_type_error(dxdnep, bool)
-                        if dxdnep == True:
-                            self.plot_params.append('dxdne')
-                    if 'dxdnedx' in plot_keys:
-                        dxdnedxp = self.json_data['quantities_to_plot']['dxdnedx']
-                        err_h.ErrorHelpers.check_type_error(dxdnedxp, bool)
-                        if dxdnedxp == True:
-                            self.plot_params.append('dxdnedx')
+                if 'dxdkx' in plot_keys:
+                    dxdkx = self.json_data['quantities_to_plot']['dxdkx']
+                    err_h.ErrorHelpers.check_type_error(dxdkx, bool)
+                    if dxdkx == True:
+                        self.plot_params.append('dxdkx')
+                if 'dydky' in plot_keys:
+                    dydky = self.json_data['quantities_to_plot']['dydky']
+                    err_h.ErrorHelpers.check_type_error(dydky, bool)
+                    if dydky == True:
+                        self.plot_params.append('dydky')
+                if 'dkxdkx' in plot_keys:
+                    dkxdkx = self.json_data['quantities_to_plot']['dkxdkx']
+                    err_h.ErrorHelpers.check_type_error(dkxdkx, bool)
+                    if dkxdkx == True:
+                        self.plot_params.append('dkxdkx')
+                if 'dkxdky' in plot_keys:
+                    dkxdky = self.json_data['quantities_to_plot']['dkxdky']
+                    err_h.ErrorHelpers.check_type_error(dkxdky, bool)
+                    if dkxdky == True:
+                        self.plot_params.append('dkxdky')
+                if 'dkydky' in plot_keys:
+                    dkydky = self.json_data['quantities_to_plot']['dkydky']
+                    err_h.ErrorHelpers.check_type_error(dkydky, bool)
+                    if dkydky == True:
+                        self.plot_params.append('dkydky')
+                if 'dkxdne' in plot_keys:
+                    dkxdne = self.json_data['quantities_to_plot']['dkxdne']
+                    err_h.ErrorHelpers.check_type_error(dkxdne, bool)
+                    if dkxdne == True:
+                        self.plot_params.append('dkxdne')
+                if 'dkxdnedx' in plot_keys:
+                    dkxdnedx = self.json_data['quantities_to_plot']['dkxdnedx']
+                    err_h.ErrorHelpers.check_type_error(dkxdnedx, bool)
+                    if dkxdnedx == True:
+                        self.plot_params.append('dkxdnedx')
+                if 'dydkx' in plot_keys:
+                    dydkx = self.json_data['quantities_to_plot']['dydkx']
+                    err_h.ErrorHelpers.check_type_error(dydkx, bool)
+                    if dydkx == True:
+                        self.plot_params.append('dydkx')
 
-                    if 'dxdkx' in plot_keys:
-                        dxdkx = self.json_data['quantities_to_plot']['dxdkx']
-                        err_h.ErrorHelpers.check_type_error(dxdkx, bool)
-                        if dxdkx == True:
-                            self.plot_params.append('dxdkx')
-                    if 'dydky' in plot_keys:
-                        dydky = self.json_data['quantities_to_plot']['dydky']
-                        err_h.ErrorHelpers.check_type_error(dydky, bool)
-                        if dydky == True:
-                            self.plot_params.append('dydky')
-                    if 'dkxdkx' in plot_keys:
-                        dkxdkx = self.json_data['quantities_to_plot']['dkxdkx']
-                        err_h.ErrorHelpers.check_type_error(dkxdkx, bool)
-                        if dkxdkx == True:
-                            self.plot_params.append('dkxdkx')
-                    if 'dkxdky' in plot_keys:
-                        dkxdky = self.json_data['quantities_to_plot']['dkxdky']
-                        err_h.ErrorHelpers.check_type_error(dkxdky, bool)
-                        if dkxdky == True:
-                            self.plot_params.append('dkxdky')
-                    if 'dkydky' in plot_keys:
-                        dkydky = self.json_data['quantities_to_plot']['dkydky']
-                        err_h.ErrorHelpers.check_type_error(dkydky, bool)
-                        if dkydky == True:
-                            self.plot_params.append('dkydky')
-                    if 'dkxdne' in plot_keys:
-                        dkxdne = self.json_data['quantities_to_plot']['dkxdne']
-                        err_h.ErrorHelpers.check_type_error(dkxdne, bool)
-                        if dkxdne == True:
-                            self.plot_params.append('dkxdne')
-                    if 'dkxdnedx' in plot_keys:
-                        dkxdnedx = self.json_data['quantities_to_plot']['dkxdnedx']
-                        err_h.ErrorHelpers.check_type_error(dkxdnedx, bool)
-                        if dkxdnedx == True:
-                            self.plot_params.append('dkxdnedx')
-                    if not self.plot_trajectory and len(self.plot_params) == 0:
-                        raise input_err.AtLeastOnePlotQuantitieError()
-
+                if not self.plot_trajectory and len(self.plot_params) == 0:
+                    raise input_err.AtLeastOnePlotQuantitieError()
 
             elif k == 'monte_carlo':
 
                 monte_carlo_keys = list(dict(self.json_data['monte_carlo']).keys())
-                if 'active' in monte_carlo_keys:
-                    active = self.json_data['monte_carlo']['active']
-                    err_h.ErrorHelpers.check_type_error(active, bool)
-                    if len(self.plot_params) != 1 and active is True and not self.plot_trajectory:
-                        raise input_err.MonteCarloWithMoreThanOnePlotQuantitiesError()
-                    self.activate_monte_carlo = active
+
+                if self.monte_carlo_is_active:
+                    if not self.plot_trajectory:
+                        if len(self.plot_params) != 1:
+                            raise input_err.MonteCarloWithMoreThanOnePlotQuantitiesError()
+
+                        if self.plot_params[0] not in const.monte_carlo_param_list:
+                            raise input_err.MonteCarloNotAllowedParameterError()
 
                     if 'num_realizations' in monte_carlo_keys:
                         num_realizations = self.json_data['monte_carlo']['num_realizations']
                         err_h.ErrorHelpers.check_type_error(num_realizations, int)
                         self.monte_carlo_num_realizations = num_realizations
 
-                    elif self.activate_monte_carlo:
+                    else:
                         logger.warning("Field 'num_realizations' was not found. Monte Carlo calculations "
                                        "will be performed with "
                                        + str(self.monte_carlo_num_realizations) + " realizations")
-                else:
-                    logger.warning("Field 'active' was not found and is set to false; Monte Carlo calculations "
-                                   "will not be performed")

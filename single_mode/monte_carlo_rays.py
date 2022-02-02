@@ -1,5 +1,5 @@
 from math import sqrt
-from math import cos, pi
+from math import cos, pi, sin
 from random import random
 
 from single_mode.setup import Setup
@@ -12,7 +12,7 @@ class MonteCarloRays:
         self.setup = setup
 
         self.phi_realizations = []
-        for _ in range(self.setup.mc_num_realizations):
+        for a in range(self.setup.mc_num_realizations):
             self.phi_realizations.append(2 * pi * random())
 
         self.it = 0
@@ -31,12 +31,12 @@ class MonteCarloRays:
 
         dne, q, phi = p
 
-        dxdt = kx / (1 + dne * cos(q * x + phi))
+        dxdt = kx / (sqrt(kx ** 2 + ky ** 2)*(1 + dne * cos(q * x + phi)))
 
-        dydt = ky / (1 + dne * cos(q * x + phi))
+        dydt = ky / (sqrt(kx ** 2 + ky ** 2)*(1 + dne * cos(q * x + phi)))
 
-        dkxdt = abs(sqrt(kx ** 2 + ky ** 2)) * (-1) * \
-                dne * cos(q * x + phi) / (1 + dne * cos(q * x + phi))
+        dkxdt = sqrt(kx ** 2 + ky ** 2)  * \
+                dne * (-q) * sin(q * x + phi) / ((1 + dne * cos(q * x + phi))**2)
 
         dkydt = 0
 

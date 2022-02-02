@@ -18,7 +18,7 @@ class Setup(SingleModeTurbulenceProfile):
         self.q0_vector = [input_params.q0x, input_params.q0y]
 
         self.mc_file_name = input_params.file_name_mc
-        self.mc_is_active = input_params.activate_monte_carlo
+        self.mc_is_active = input_params.monte_carlo_is_active
         self.mc_num_realizations = input_params.monte_carlo_num_realizations
 
         self.k0_angle = input_params.k0_angle

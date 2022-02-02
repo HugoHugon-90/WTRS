@@ -45,19 +45,12 @@ class OdeSolver:
                     dxdnedx = wsol[time][plot_vs_integrator_dict['dxdnedx']]
                     dydy = wsol[time][plot_vs_integrator_dict['dydy']]
 
-                    dxdkx = wsol[time][plot_vs_integrator_dict['dxdkx']]
-
-
                     x = wsol[time][plot_vs_integrator_dict['x']]
                     y = wsol[time][plot_vs_integrator_dict['y']]
                     kx = wsol[time][plot_vs_integrator_dict['kx']]
                     ky = wsol[time][plot_vs_integrator_dict['ky']]
                     k = math.sqrt(kx**2 + ky**2)
                     A = self.setup.amplitude
-                    q = self.setup.q0_vector[0]
-
-                    #if time == 0:
-                     #   time = 1
 
                     dxdt = (kx /k)* (1+A**2/2) + \
                            (3 * kx/(2*k**5)) * (kx**2 * dkxdkx + ky**2 * dkydky + 2*kx*ky*dkxdky) \
@@ -71,11 +64,6 @@ class OdeSolver:
                            - dkydne/k \
                            + (ky/k**3) * (kx * dkxdne +  ky * dkydne) -\
                            (ky/k)*dxdnedx
-
-                    #dxdt = (wsol[time][plot_vs_integrator_dict[self.setup.plot_params[0]]]
-                          #  - wsol[time - 1][plot_vs_integrator_dict[self.setup.plot_params[0]]]) / 2.0
-                    #dydt = (wsol[time][plot_vs_integrator_dict[self.setup.plot_params[1]]]
-                           # - wsol[time - 1][plot_vs_integrator_dict[self.setup.plot_params[1]]]) / 2.0
 
                     sigma_perp = -(math.sqrt(dxdx) * abs(dydt) + math.sqrt(dydy) * abs(dxdt)) / math.sqrt(dxdt ** 2 + dydt ** 2)
                     sigma_perp_x = - sigma_perp * dydt / math.sqrt(dxdt ** 2 + dydt ** 2)
@@ -98,6 +86,11 @@ class OdeSolver:
 
                     sol_to_process = np.zeros((len(t), len(self.monte_carlo_ray.phi_realizations)))
 
+                    param = self.setup.plot_params[0]
+                    if param in ['dxdx','dydy','dkxdkx','dkydky']:
+                        aux_dict = {'dxdx':'x','dydy':'y','dkxdkx':'kx','dkydky':'ky'}
+                        param = aux_dict[param]
+
                     for phi in range(len(self.monte_carlo_ray.phi_realizations)):
                         self.monte_carlo_ray.set_phi(phi)
                         wsol_mc = odeint(self.monte_carlo_ray.mc_aux_integrator_func, self.setup.w_mc, t,
@@ -105,13 +98,27 @@ class OdeSolver:
                                          rtol=self.setup.rel_err)
 
                         for time in range(len(t)):
-                            sol_to_process[time][phi] = wsol_mc[time][
-                                plot_vs_integrator_dict[self.setup.plot_params[0]]]
+                            sol_to_process[time][phi] = wsol_mc[time][plot_vs_integrator_dict[param]]
 
                     for time in range(len(t)):
-                        s = f'{t[time]}\t{np.average(sol_to_process[time])}\t{np.var(sol_to_process[time])}'
+                        s = f'{t[time]}\t{np.average(sol_to_process[time])}\t{np.mean(np.square(np.mean(sol_to_process[time])-sol_to_process[time]),dtype="float64")}'
                         f.write(s + "\n")
             else:
-                pass
+                with open(self.setup.mc_file_name, 'w') as f:
+
+                    sol_to_process = np.zeros((len(t), len(self.monte_carlo_ray.phi_realizations), 2))
+
+                    for phi in range(len(self.monte_carlo_ray.phi_realizations)):
+                        self.monte_carlo_ray.set_phi(phi)
+                        wsol_mc = odeint(self.monte_carlo_ray.mc_aux_integrator_func, self.setup.w_mc, t,
+                                         args=(self.monte_carlo_ray.p,), atol=self.setup.abs_err,
+                                         rtol=self.setup.rel_err)
+
+                        for time in range(len(t)):
+                            sol_to_process[time][phi][0] = wsol_mc[time][plot_vs_integrator_dict['x']]
+                            sol_to_process[time][phi][1] = wsol_mc[time][plot_vs_integrator_dict['y']]
+
+                            s = f'{sol_to_process[time][phi][0]}\t{sol_to_process[time][phi][1]}'
+                            f.write(s + "\n")
 
         return wsol

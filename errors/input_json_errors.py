@@ -90,3 +90,11 @@ class MonteCarloWithMoreThanOnePlotQuantitiesError(Exception):
         error = ErrorHelpers.error_printer(const.MONTE_CARLO_WITH_MORE_THAN_ONE_PLOT_PARAM_CODE,
                                            const.MONTE_CARLO_WITH_MORE_THAN_ONE_PLOT_PARAM_MESSAGE)
         return error
+
+
+class MonteCarloNotAllowedParameterError(Exception):
+
+    def __str__(self):
+        error = ErrorHelpers.error_printer(const.MONTE_CARLO_NOT_ALLOWED_PARAMETER_CODE,
+                                           const.MONTE_CARLO_NOT_ALLOWED_PARAMETER_MESSAGE)
+        return error

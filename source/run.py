@@ -17,7 +17,7 @@ def run():
     _average_ray = AverageRays(_setup)
     _mc_ray = None
 
-    if _init.activate_monte_carlo:
+    if _init.monte_carlo_is_active:
         _mc_ray = MonteCarloRays(_setup)
 
     # Instantiate and execute ODE solver
