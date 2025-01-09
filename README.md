@@ -4,29 +4,29 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 # Single-mode, homogeneous random media case: physical description
 
 ## Physical quantities (SI): 
-- r1, r2 (2D - positions [m])
-- k = ||k|| (scalar wavevector [m^(-1)])
-- k1, k2 (2D - wavenumbers [m^(-1)])
-- k_0 (unperturbed wavenumber [m^(-1)])
-- c (speed of light [m.s^(-1)]) 
-- q (wavenumber of turbulence [m^(-1)]
-- n0 (unperturbed refractive index)
-- n (refractive index)
-- < n_e > (ensemble averaged density [m^(-3)])
-- \phi (random phase [0, 2 Pi])
-- \delta n_e (r) = \delta n_e0 cos(q r1 + \phi)  (density fluctuations << < ne > [m^(-3)])
-- n(r)/n0 = 1 + \delta n_e (r) / <ne> (turbulence profile through the effects of density fluctuations in the refractive index)
-- t (time [s])
-- w(r) = c k /n(r) 
+- $r_1$, $r_2$ (2D - positions $[m]$)
+- $k = ||k||$ (scalar wavevector $[m^{-1}]$)
+- $k_1, k_2$ (2D - wavenumbers $[m^{-1}]$)
+- $k_0$ (unperturbed wavenumber $[m^{-1}]$)
+- $c$ (speed of light $[m.s^{-1}]$) 
+- $q$ (wavenumber of turbulence $[m^{-1}]$
+- $n_0$ (unperturbed refractive index)
+- $n$ (refractive index)
+- $< n_e >$ (ensemble averaged density $[m^{-3}]$)
+- $\phi$ (random phase $[0, 2 \pi]$)
+- $\delta n_e (r) = \delta n_{e_0} cos(q r_1 + \phi)$  (density fluctuations of $< ne > [m^{-3}]$)
+- $n(r)/n0 = 1 + \delta n_e (r) / <ne>$ (turbulence profile through the effects of density fluctuations in the refractive index [adimensional])
+- $t$ (time $[s]$)
+- $w(r) = c k /n(r)$ (dispersion relation $[s^{-1}]$)
 
 ## Normalized quantites used in the code
-- x[y] = (k_0 / 2 Pi) r1[2] (position)
-- \kappa_x[y] = k_1[2] / k_0
-- \delta n_e (r) = \delta n_e0 cos(q x + \phi)
-- q --> q/k_0 (in this normalized system, wavenumber of turbulence becomes adimensional)
-- \tau = (c k_0 / 2 Pi n_0) t
-- < ne > === 1 ---> \delta n_e0 (r) becomes a percentage 
-- \kappa_x[y]_0, x[y]_0 refer to initial conditions for normalized wavevectors and position, respectively 
+- $x[y] = \frac{k_0}{2 \pi} r_{1[2]}$ (position)
+- $\kappa_{x[y]} = \frac{k_{1[2]}}{k_0}$
+- $\delta n_e (r) = \delta n_{e0} cos(q x + \phi)$
+- $q -> q/k_0$ (in this normalized system, wavenumber of turbulence becomes adimensional)
+- $\tau = (c k_0 / 2 \pi n_0) t$
+- $< ne > === 1 -> $\delta n_{e0} (r)$ becomes a percentage 
+- $\kappa_{x[y]_0}, x[y]_0$ refer to initial conditions for normalized wavevectors and position, respectively 
 
 - Output example:
 ![](.README_images/65.0_trajectories.png)
