@@ -23,9 +23,9 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 - $x[y] = \frac{k_0}{2 \pi} r_{1[2]}$ (position)
 - $\kappa_{x[y]} = \frac{k_{1[2]}}{k_0}$
 - $\delta n_e (r) = \delta n_{e0} cos(q x + \phi)$
-- $q \arrow q/k_0$ (in this normalized system, wavenumber of turbulence becomes adimensional)
+- $q \rightarrow q/k_0$ (in this normalized system, wavenumber of turbulence becomes adimensional)
 - $\tau = (c k_0 / 2 \pi n_0) t$
-- $< ne > === 1 \arrow $\delta n_{e0} (r)$ becomes a percentage 
+- $< ne > === 1 \rightarrow $\delta n_{e0} (r)$ becomes a percentage 
 - $\kappa_{x[y]_0}, x[y]_0$ refer to initial conditions for normalized wavevectors and position, respectively 
 
 - Output example:
