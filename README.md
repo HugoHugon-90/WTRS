@@ -15,7 +15,7 @@ A ray tracing code in 2D - slab geometry based on the work of J.P. Bizarro, H. H
 - $< n_e >$ (ensemble averaged density $[m^{-3}]$)
 - $\phi$ (random phase $[0, 2 \pi]$)
 - $\delta n_e (r) = \delta n_{e_0} cos(q r_1 + \phi)$  (density fluctuations of $< ne > [m^{-3}]$)
-- $n(r)/n0 = 1 + \delta n_e (r) / <ne>$ (turbulence profile through the effects of density fluctuations in the refractive index [adimensional])
+- $n(r)/n0 = 1 + \delta n_e(r)/<n_e>$ (turbulence profile through the effects of density fluctuations in the refractive index [adimensional])
 - $t$ (time $[s]$)
 - $w(r) = c k /n(r)$ (dispersion relation $[s^{-1}]$)
 
